@@ -158,9 +158,10 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
-Version 3:
-Logan Wyatt
-Eli Brinkman
-For more information on contributors please see <a ref="./AUTHORS">AUTHORS</a>
+
+Version 3:  
+Logan Wyatt  
+Eli Brinkman  
+For more information on contributors please see [AUTHORS](./AUTHORS)
 ## License
 Public Domain. No copy write protection. 
