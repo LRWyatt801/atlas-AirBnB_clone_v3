@@ -11,9 +11,11 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views, url_prefix="/api/vi")
 
+
 @app.teardown_appcontext
 def close_db(exception=None):
     storage.close()
+
 
 if __name__ == "__main__":
     # hostname/port assigned env variable if it exists

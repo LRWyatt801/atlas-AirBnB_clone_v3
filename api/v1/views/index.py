@@ -2,9 +2,11 @@
 
 """defines status route"""
 
+from flask import jsonify
 from api.v1.views import app_views
+
 
 @app_views.route("/status")
 def status():
-    # TODO - Make json-y
-    return {"status":"OK"}
+    response = {"status":"OK"}
+    return jsonify(response)
