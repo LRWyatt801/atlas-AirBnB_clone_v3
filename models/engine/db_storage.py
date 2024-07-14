@@ -59,7 +59,8 @@ class DBStorage:
             return class_dict[obj_key]
         return None
 
-    def count(self, cls= None):
+    def count(self, cls=None):
+        """counts the number of objects in storage"""
         count_dict = self.all(cls)
         return len(count_dict)
 
