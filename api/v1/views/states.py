@@ -39,6 +39,15 @@ def get_states(state_id=None):
 
 @app_views.route("/states/<state_id>", methods=["DELETE"])
 def delete_states(state_id):
+    """Deletes an obj from storage
+
+    Args:
+        state_id (uuid): uuid of obj to delete
+
+    Returns:
+        dict: empty dictionary and code:200 on success,
+              otherwise abort(404)
+    """
     if state_id:
         state_key = "State." + state_id
         if state_key in storage.all():
