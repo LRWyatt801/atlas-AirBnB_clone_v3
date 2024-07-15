@@ -4,9 +4,6 @@ from api.v1.views import app_views
 from flask import jsonify, abort
 from models import storage
 from models.state import State
-from models.base_model import BaseModel
-from models.engine.db_storage import DBStorage
-from models.engine.file_storage import FileStorage
 
 
 @app_views.route("/states", methods=["GET"])
@@ -22,17 +19,15 @@ def get_states(state_id=None):
               when state_id is given and is found returns json state obj
               matching state_id, otherwise abort(404)
     """
-    states_list = []
-    all_states = storage.all(State)
     # Returns one state obj matching state_id
     if state_id:
-        state_key = "State." + state_id
-        if state_key in all_states:
-            return jsonify(all_states[state_key].to_dict())
-        else:
-            return abort(404)
+        state_obj = storage.get(State, state_id)
+        if not state_obj:
+            abort(404)
+        return jsonify(state_obj.to_dict())
     # Returns all existing state objs
-    for obj_key, state_object in all_states.items():
+    states_list = []
+    for obj_key, state_object in storage.all(State).items():
         state_dict = state_object.to_dict()
         states_list.append(state_dict)
     return jsonify(states_list)
