@@ -56,7 +56,7 @@ class DBStorage:
         if cls and id:
             obj_key = cls.__name__ + '.' + id
             class_dict = self.all(cls)
-            if class_dict[obj_key]:
+            if obj_key in class_dict:
                 return class_dict[obj_key]
         return None
 
