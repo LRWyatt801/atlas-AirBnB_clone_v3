@@ -9,7 +9,7 @@ from models.state import State
 @app_views.route("/states", methods=["GET", "POST"])
 @app_views.route("/states/<state_id>", methods=["GET", "PUT", "DELETE"])
 def states(state_id=None):
-    """Retrieves state obj(s)
+    """Handles all API actions
 
     Args:
         state_id (uuid, optional): uuid for state obj. Defaults to None.
