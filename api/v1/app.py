@@ -3,7 +3,7 @@
 """defines the function api_status"""
 
 from os import getenv
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -15,6 +15,11 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 @app.teardown_appcontext
 def close_db(exception=None):
     storage.close()
+
+@app.errorhandler(404)
+def not_found(e):
+    response = {"error": "Not found"}
+    return jsonify(response)
 
 
 if __name__ == "__main__":
