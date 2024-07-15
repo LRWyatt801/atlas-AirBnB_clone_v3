@@ -48,7 +48,6 @@ class FileStorage:
         count_dict = self.all(cls)
         return len(count_dict)
 
-
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:

@@ -65,7 +65,6 @@ class DBStorage:
         count_dict = self.all(cls)
         return len(count_dict)
 
-
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
