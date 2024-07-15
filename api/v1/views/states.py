@@ -5,11 +5,13 @@ from flask import jsonify, abort
 from models import storage
 from models.state import State
 from models.base_model import BaseModel
+from models.engine.db_storage import DBStorage
+from models.engine.file_storage import FileStorage
 
 
 @app_views.route("/states", methods=["GET"])
 @app_views.route("/states/<state_id>", methods=["GET"])
-def states(state_id=None):
+def get_states(state_id=None):
     """Retrieves state obj(s)
 
     Args:
@@ -34,3 +36,13 @@ def states(state_id=None):
         state_dict = state_object.to_dict()
         states_list.append(state_dict)
     return jsonify(states_list)
+
+@app_views.route("/states/<state_id>", methods=["DELETE"])
+def delete_states(state_id):
+    if state_id:
+        state_key = "State." + state_id
+        if state_key in storage.all():
+            storage.all()[state_key].delete()
+            storage.save()
+            return jsonify({}), 200
+    abort(404)
