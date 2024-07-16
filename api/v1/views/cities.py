@@ -45,6 +45,7 @@ def get_city(city_id=None):
         abort(404)
     return jsonify(city_obj.to_dict())
 
+
 @app_views.route("/cities/<city_id>", methods=["DELETE"])
 def delete_city(city_id):
     """Deletes a city obj that matches given city_id
@@ -64,6 +65,7 @@ def delete_city(city_id):
             return jsonify({}), 200
     # Returns error if city_id doesn't match any objects
     abort(404)
+
 
 @app_views.route("/states/<state_id>/cities", methods=["POST"])
 def create_city(state_id=None):
@@ -89,6 +91,7 @@ def create_city(state_id=None):
     storage.new(new_city)
     storage.save()
     return jsonify(new_city.to_dict()), 201
+
 
 @app_views.route("/cities/<city_id>", methods=["PUT"])
 def update_city(city_id=None):
