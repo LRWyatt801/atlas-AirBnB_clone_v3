@@ -39,7 +39,7 @@ class FileStorage:
         if cls and id:
             obj_key = cls.__name__ + '.' + id
             class_dict = self.all(cls)
-            if class_dict[obj_key]:
+            if obj_key in class_dict:
                 return class_dict[obj_key]
         return None
 
@@ -47,7 +47,6 @@ class FileStorage:
         """counts the number of objects in storage"""
         count_dict = self.all(cls)
         return len(count_dict)
-
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
