@@ -18,6 +18,7 @@ CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 def close_db(exception=None):
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(e):
     response = {"error": "Not found"}
