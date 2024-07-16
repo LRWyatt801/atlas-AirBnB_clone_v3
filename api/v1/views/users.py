@@ -79,8 +79,8 @@ def create_user(user_id=None):
                 setattr(user_obj, key, value)
         storage.save()
         return jsonify(user_obj.to_dict()), 200
-    if "name" not in data:
-        abort(400, description="Missing name")
+    if "email" not in data:
+        abort(400, description="Missing email")
     if "password" not in data:
         abort(400, description="Missing password")
     # user_id not given, create new user obj
