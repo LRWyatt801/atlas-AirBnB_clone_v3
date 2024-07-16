@@ -110,9 +110,6 @@ def update_place(place_id=None):
     if not request.is_json:
         abort(400, description="Not a JSON")
     data = request.get_json()
-    if "name" not in data:
-        abort(400, description="Missing name")
-    # place_id given, update existing place obj
     place_obj = storage.get(Place, place_id)
     if not place_obj:
         abort(404)

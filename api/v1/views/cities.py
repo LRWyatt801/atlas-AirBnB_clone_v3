@@ -106,9 +106,6 @@ def update_city(city_id=None):
     if not request.is_json:
         abort(400, description="Not a JSON")
     data = request.get_json()
-    if "name" not in data:
-        abort(400, description="Missing name")
-    # city_id given, update existing city obj
     city_obj = storage.get(City, city_id)
     if not city_obj:
         abort(404)
