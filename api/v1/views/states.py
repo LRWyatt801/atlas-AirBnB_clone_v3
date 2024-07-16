@@ -49,6 +49,7 @@ def delete_state(state_id):
             storage.all()[state_key].delete()
             storage.save()
             return jsonify({}), 200
+    # if state_id doesn't match any objects, return 404
     abort(404)
 
 @app_views.route("/states", methods=["POST"])
