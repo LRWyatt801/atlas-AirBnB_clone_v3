@@ -50,6 +50,7 @@ def delete_state(state_id):
             storage.all()[state_key].delete()
             storage.save()
             return jsonify({}), 200
+    # if state_id doesn't match any objects, return 404
     abort(404)
 
 
@@ -79,9 +80,10 @@ def create_state(state_id=None):
                 setattr(state_obj, key, value)
         storage.save()
         return jsonify(state_obj.to_dict()), 200
-    # state_id not given, create new state obj
+    # state_id not found in dictionary
     if "name" not in data:
         abort(400, description="Missing name")
+    # state_id not given, create new state obj
     new_state = State(**data)
     storage.new(new_state)
     storage.save()
