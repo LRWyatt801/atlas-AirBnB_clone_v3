@@ -43,11 +43,12 @@ def delete_amenity(amenity_id):
         dict: empty dictionary and Status:200 on success,
               otherwise abort(404)
     """
-    amenity_key = "amenity." + amenity_id
-    if amenity_key in storage.all():
-        storage.all()[amenity_key].delete()
-        storage.save()
-        return jsonify({}), 200
+    if amenity_id:
+        amenity_key = "Amenity." + amenity_id
+        if amenity_key in storage.all():
+            storage.all()[amenity_key].delete()
+            storage.save()
+            return jsonify({}), 200
     # Returns error if amenity_id doesn't match any objects
     abort(404)
 

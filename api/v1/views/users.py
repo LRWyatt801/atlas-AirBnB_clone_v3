@@ -43,11 +43,12 @@ def delete_user(user_id):
         dict: empty dictionary and Status:200 on success,
               otherwise abort(404)
     """
-    user_key = "user." + user_id
-    if user_key in storage.all():
-        storage.all()[user_key].delete()
-        storage.save()
-        return jsonify({}), 200
+    if user_id:
+        user_key = "User." + user_id
+        if user_key in storage.all():
+            storage.all()[user_key].delete()
+            storage.save()
+            return jsonify({}), 200
     # Returns error if user_id doesn't match any objects
     abort(404)
 
