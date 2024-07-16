@@ -108,7 +108,7 @@ def update_city(city_id=None):
     data = request.get_json()
     if "name" not in data:
         abort(400, description="Missing name")
-    # state_id given, update existing state obj
+    # city_id given, update existing city obj
     city_obj = storage.get(City, city_id)
     if not city_obj:
         abort(404)
