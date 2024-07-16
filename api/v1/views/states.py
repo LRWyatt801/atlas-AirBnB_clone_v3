@@ -9,7 +9,7 @@ from models.state import State
 @app_views.route("/states", methods=["GET"])
 @app_views.route("/states/<state_id>", methods=["GET"])
 def get_states(state_id=None):
-    """Handles all API actions
+    """Retrieves State object(s)
 
     Args:
         state_id (uuid, optional): uuid for state obj. Defaults to None.
@@ -17,7 +17,7 @@ def get_states(state_id=None):
     Returns:
         json: when no state_id is given returns json list of all state objs,
               when state_id is given and is found returns json state obj
-              matching state_id, otherwise abort(404)
+              with matching state_id, otherwise abort(404)
     """
     # Returns one state obj matching state_id
     if state_id:
@@ -32,9 +32,10 @@ def get_states(state_id=None):
         states_list.append(state_dict)
     return jsonify(states_list)
 
+
 @app_views.route("/states/<state_id>", methods=["DELETE"])
 def delete_state(state_id):
-    """Deletes a state object that matchs by state_id
+    """Deletes a state object that has matching state_id
 
     Args:
         state_id (uuid): uuid of state object
@@ -51,9 +52,19 @@ def delete_state(state_id):
             return jsonify({}), 200
     abort(404)
 
+
 @app_views.route("/states", methods=["POST"])
 @app_views.route("/states/<state_id>", methods=["PUT"])
 def create_state(state_id=None):
+    """Creates and/or updates State objects
+
+    Args:
+        state_id (uuid, optional): uuid for a specific State object.
+                                   Defaults to None.
+
+    Returns:
+        JSON: recently created/updated State object
+    """
     # get JSON
     if not request.is_json:
         abort(400, description="Not a JSON")
