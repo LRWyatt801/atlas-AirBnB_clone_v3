@@ -18,7 +18,7 @@ def get_amenities(amenity_id=None):
         json: Returns single amenity obj if amenity_id given.
               Returns json list of all amenity objs otherwise.
     """
-    # Returns one amentiy obj matching amenity_id
+    # Returns one amenity obj matching amenity_id
     if amenity_id:
         amenity_obj = storage.get(Amenity, amenity_id)
         if not amenity_obj:
