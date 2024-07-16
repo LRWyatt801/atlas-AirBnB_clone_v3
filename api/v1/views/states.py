@@ -69,9 +69,10 @@ def create_state(state_id=None):
                 setattr(state_obj, key, value)
         storage.save()
         return jsonify(state_obj.to_dict()), 200
-    # state_id not given, create new state obj
+    # state_id not found in dictionary
     if "name" not in data:
         abort(400, description="Missing name")
+    # state_id not given, create new state obj
     new_state = State(**data)
     storage.new(new_state)
     storage.save()
