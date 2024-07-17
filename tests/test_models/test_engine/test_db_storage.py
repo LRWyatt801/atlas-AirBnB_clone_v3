@@ -72,6 +72,17 @@ test_db_storage.py'])
 class Test_DBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.storage = DBStorage()
+        cls.storage.reload()
+    
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.storage.close()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
@@ -92,8 +103,6 @@ class Test_DBStorage(unittest.TestCase):
     @patch('sqlalchemy.create_engine')
     def test_get(self, mock_create_engine):
         """Test that get returns one obj"""
-        storage = DBStorage()
-        storage.reload()
         
         # Mock the engine to avoid actual database connections
         mock_engine = mock_create_engine.return_value
@@ -115,8 +124,6 @@ class Test_DBStorage(unittest.TestCase):
     @patch('sqlalchemy.create_engine')
     def test_count(self, mock_create_engine):
         """Test that count returns the correct number of objects"""
-        storage = DBStorage()
-        storage.reload()
         # Mock the engine to avoid actual database connections
         mock_engine = mock_create_engine.return_value
         mock_session = mock_engine.session.return_value
