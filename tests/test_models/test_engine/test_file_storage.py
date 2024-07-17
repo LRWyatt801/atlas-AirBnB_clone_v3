@@ -127,7 +127,7 @@ class TestFileStorage(unittest.TestCase):
         storage.new(obj_1)
         storage.new(obj_2)
 
-        obj_retrieved =  storage.get(BaseModel, "9876543210")
+        obj_retrieved = storage.get(BaseModel, "9876543210")
 
         self.assertIsNotNone(obj_retrieved)
         self.assertEqual(obj_retrieved.id, "9876543210")
@@ -145,7 +145,7 @@ class TestFileStorage(unittest.TestCase):
         storage.new(obj_1)
         storage.new(obj_2)
 
-        num_objects =  storage.count(BaseModel)
+        num_objects = storage.count(BaseModel)
 
         self.assertEqual(num_objects, 2)
 
