@@ -76,7 +76,7 @@ class Test_DBStorage(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.storage = DBStorage()
         cls.storage.reload()
-    
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     @classmethod
     def tearDownClass(cls) -> None:
@@ -103,7 +103,7 @@ class Test_DBStorage(unittest.TestCase):
     @patch('sqlalchemy.create_engine')
     def test_get(self, mock_create_engine):
         """Test that get returns one obj"""
-        
+
         # Mock the engine to avoid actual database connections
         mock_engine = mock_create_engine.return_value
         mock_session = mock_engine.session.return_value
@@ -129,7 +129,8 @@ class Test_DBStorage(unittest.TestCase):
         mock_session = mock_engine.session.return_value
 
         # Create sample objects
-        sample_objs = [BaseModel(id=f"{i}", name=f"Object {i}") for i in range(5)]
+        sample_objs = [BaseModel(id=f"{i}",
+                                 name=f"Object {i}") for i in range(5)]
         for obj in sample_objs:
             obj.save()
 
