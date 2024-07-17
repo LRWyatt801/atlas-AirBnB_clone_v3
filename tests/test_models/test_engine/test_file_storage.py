@@ -116,11 +116,37 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == "db", "not testing file storage")
     def test_get(self):
-        """Test that get returns one obj"""
-        # first_state_id = list(FileStorage.all(State).values())[0].id
-        # state_test = FileStorage.get(State, first_state_id)
-        # self.assertIsInstance(state_test, State)
+        """Test that get returns one obj and is valid"""
+        storage = FileStorage()
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        obj_1_dict = {"id": "9876543210"}
+        obj_2_dict = {"id": "abcdefghij"}
+        obj_1 = BaseModel(**obj_1_dict)
+        obj_2 = BaseModel(**obj_2_dict)
+        storage.new(obj_1)
+        storage.new(obj_2)
+
+        obj_retrieved =  storage.get(BaseModel, "9876543210")
+
+        self.assertIsNotNone(obj_retrieved)
+        self.assertEqual(obj_retrieved.id, "9876543210")
+
+        FileStorage._FileStorage__objects = save
 
     @unittest.skipIf(models.storage_t == "db", "not testing file storage")
     def test_count(self):
         """Test that count returns the correct number of objects"""
+        storage = FileStorage()
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        obj_1 = BaseModel()
+        obj_2 = BaseModel()
+        storage.new(obj_1)
+        storage.new(obj_2)
+
+        num_objects =  storage.count(BaseModel)
+
+        self.assertEqual(num_objects, 2)
+
+        FileStorage._FileStorage__objects = save
