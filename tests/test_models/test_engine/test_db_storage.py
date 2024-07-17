@@ -5,6 +5,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 from datetime import datetime
 import inspect
+from unittest.mock import patch
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
@@ -68,7 +69,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class Test_DBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -88,12 +89,45 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
     @unittest.skipIf(models.storage_t != "db", "not testing db storage")
-    def test_get(self):
+    @patch('sqlalchemy.create_engine')
+    def test_get(self, mock_create_engine):
         """Test that get returns one obj"""
-        # first_state_id = list(DBStorage.all(State).values())[0].id
-        # state_test = DBStorage.get(State, first_state_id)
-        # self.assertIsInstance(state_test, State)
+        storage = DBStorage()
+        storage.reload()
+        
+        # Mock the engine to avoid actual database connections
+        mock_engine = mock_create_engine.return_value
+        mock_session = mock_engine.session.return_value
+
+        # Create a sample object
+        sample_obj = BaseModel(id="123", name="Test Object")
+        sample_obj.save()
+
+        # Retrieve the object
+        retrieved_obj = self.storage.get(BaseModel, "123")
+
+        # Assert the expected behavior
+        self.assertIsNotNone(retrieved_obj)
+        self.assertEqual(retrieved_obj.id, "123")
+        self.assertEqual(retrieved_obj.name, "Test Object")
 
     @unittest.skipIf(models.storage_t != "db", "not testing db storage")
-    def test_count(self):
+    @patch('sqlalchemy.create_engine')
+    def test_count(self, mock_create_engine):
         """Test that count returns the correct number of objects"""
+        storage = DBStorage()
+        storage.reload()
+        # Mock the engine to avoid actual database connections
+        mock_engine = mock_create_engine.return_value
+        mock_session = mock_engine.session.return_value
+
+        # Create sample objects
+        sample_objs = [BaseModel(id=f"{i}", name=f"Object {i}") for i in range(5)]
+        for obj in sample_objs:
+            obj.save()
+
+        # Count the objects
+        count = self.storage.count(BaseModel)
+
+        # Assert the expected behavior
+        self.assertEqual(count, 5)
